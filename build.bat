@@ -1,4 +1,4 @@
-echo off
+@echo off
 
 rem Build lidar_ffi_wrapper
 cd src
@@ -12,5 +12,8 @@ if %ERRORLEVEL% == 1 exit /b
 cmake --build .
 cd ..
 if not exist dist mkdir dist
-copy build\Debug\lidar_ffi.dll \dist
-copy build\sick_scan_xd\Debug\sick_scan_xd_shared_lib.dll \dist
+cd build
+copy Debug\lidar_ffi.dll ..\dist
+copy sick_scan_xd\Debug\sick_scan_xd_shared_lib.dll ..\dist
+cd ..
+dart --enable-experiment=native-assets run ffigen --config lidar.yaml -v severe

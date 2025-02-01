@@ -2,5 +2,13 @@ import "package:lidar/lidar.dart";
 
 void main() async {
   final collection = LidarCollection();
-  await collection.init();
+  final ready = await collection.init();
+  if(!ready) {
+    print("Failed to initialize Lidar");
+    await collection.dispose();
+    print("Disposed Lidar");
+    return;
+  }
+  await collection.run();
+  await collection.dispose();
 }

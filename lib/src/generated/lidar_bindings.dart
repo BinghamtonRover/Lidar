@@ -1039,21 +1039,21 @@ class LidarBindings {
           int Function(
               SickScanApiHandle, ffi.Pointer<SickScanOdomVelocityMsg>)>();
 
-  void init() {
+  int init() {
     return _init();
   }
 
   late final _initPtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function()>>('init');
-  late final _init = _initPtr.asFunction<void Function()>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function()>>('init');
+  late final _init = _initPtr.asFunction<int Function()>();
 
-  void dispose() {
+  int dispose() {
     return _dispose();
   }
 
   late final _disposePtr =
-      _lookup<ffi.NativeFunction<ffi.Void Function()>>('dispose');
-  late final _dispose = _disposePtr.asFunction<void Function()>();
+      _lookup<ffi.NativeFunction<ffi.Int32 Function()>>('dispose');
+  late final _dispose = _disposePtr.asFunction<int Function()>();
 
   void updateLatestImage(
     SickScanApiHandle apiHandle,
@@ -1104,10 +1104,10 @@ class LidarBindings {
       .asFunction<void Function(ffi.Pointer<SickScanPointCloudMsg>)>();
 
   void make_matrix(
-    ffi.Pointer<SickScanPointCloudMsg> imageData,
+    ffi.Pointer<SickScanPointCloudMsg> msg,
   ) {
     return _make_matrix(
-      imageData,
+      msg,
     );
   }
 
@@ -1117,6 +1117,39 @@ class LidarBindings {
               ffi.Pointer<SickScanPointCloudMsg>)>>('make_matrix');
   late final _make_matrix = _make_matrixPtr
       .asFunction<void Function(ffi.Pointer<SickScanPointCloudMsg>)>();
+
+  ffi.Pointer<ffi.Double> getLatestData() {
+    return _getLatestData();
+  }
+
+  late final _getLatestDataPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Double> Function()>>(
+          'getLatestData');
+  late final _getLatestData =
+      _getLatestDataPtr.asFunction<ffi.Pointer<ffi.Double> Function()>();
+
+  void updateLatestData(
+    ffi.Pointer<SickScanPointCloudMsg> pointCloudMsg,
+  ) {
+    return _updateLatestData(
+      pointCloudMsg,
+    );
+  }
+
+  late final _updateLatestDataPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              ffi.Pointer<SickScanPointCloudMsg>)>>('updateLatestData');
+  late final _updateLatestData = _updateLatestDataPtr
+      .asFunction<void Function(ffi.Pointer<SickScanPointCloudMsg>)>();
+
+  int getStatus() {
+    return _getStatus();
+  }
+
+  late final _getStatusPtr =
+      _lookup<ffi.NativeFunction<ffi.Int Function()>>('getStatus');
+  late final _getStatus = _getStatusPtr.asFunction<int Function()>();
 
   late final addresses = _SymbolAddresses(this);
 }
@@ -2108,7 +2141,7 @@ final class Image extends ffi.Struct {
   @ffi.Uint64()
   external int width;
 
-  /// uint64_t capacity;
-  /// SickScanUint8Array buffer;
   external ffi.Pointer<ffi.Uint8> data;
+
+  external ffi.Pointer<ffi.Double> OneDArray;
 }
